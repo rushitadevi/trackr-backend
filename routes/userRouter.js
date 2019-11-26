@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const passport=require("passport")
 const userRouter = express.Router();
 const UserSchema = require("../models/User");
-const { createToken } = require("../authenticate")
+const { createToken,userrights,token } = require("../authenticate")
 
 userRouter.post("/register/", async (req, res) => {
   try {
@@ -19,10 +19,10 @@ userRouter.post("/login", passport.authenticate("local"), (req, res) => {
     try
     {
         var token = createToken({ _id: req.user._id });
-        res.render('error', {        
-            message: err.message,
-            error: {}
-        });
+        // res.render('error', {        
+        //     message: err.message,
+        //     error: {}
+        // });
         res.send({
             success: true,
             email: req.user.email,
@@ -38,11 +38,12 @@ userRouter.post("/login", passport.authenticate("local"), (req, res) => {
 userRouter.get("/",async(req,res)=>{
    try
    {
+    
      var users= await UserSchema.find({})     
-     res.render('error', {        
-        message: err.message,
-        error: {}
-    });
+    //  res.render('error', {        
+    //     message: err.message,
+    //     error: {}
+    // });
     res.send(users)
     }
    catch(ex)

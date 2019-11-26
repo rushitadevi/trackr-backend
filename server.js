@@ -6,6 +6,7 @@ const cors = require("cors")
 const server = express();
 const UserRouter = require("./routes/userRouter")
 const SchoolRouter=require("./routes/schoolRouter")
+//var jobappRouter = require("./routes/jobappRouter")
 
 server.set("port", process.env.PORT || 4000)
 server.use(cors())
@@ -14,6 +15,7 @@ server.use(bodyParser.json())
 server.use(passport.initialize()) 
 server.use("/user",UserRouter)
 server.use("/school",SchoolRouter)
+//server.use("/application", jobappRouter)
 
 const url=process.env.MONGODB
 console.log(url)

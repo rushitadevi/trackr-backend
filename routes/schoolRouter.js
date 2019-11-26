@@ -2,8 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const schoolRouter = express.Router();
 const SchoolSchema = require("../models/School");
+const { adminOnly,token } = require("../authenticate")
 
-schoolRouter.post("/create", async (req, res) => {
+schoolRouter.post("/create",token,adminOnly, async (req, res) => {
     try {
         console.log(req.body)
       var School = await SchoolSchema.create(req.body)
@@ -14,7 +15,7 @@ schoolRouter.post("/create", async (req, res) => {
     }
   });
 
-  schoolRouter.get("/", async (req, res) => {
+  schoolRouter.get("/",token,adminOnly, async (req, res) => {
     try {
       var School = await SchoolSchema.find({})
       res.send(School);
@@ -24,7 +25,7 @@ schoolRouter.post("/create", async (req, res) => {
     }
   });
 
-  schoolRouter.get("/:id", async (req, res) => {
+  schoolRouter.get("/:id",token,adminOnly, async (req, res) => {
     try {
       var School = await SchoolSchema.findById({_id:req.params.id})
       if(School===null)
@@ -42,7 +43,7 @@ schoolRouter.post("/create", async (req, res) => {
     }
   });
 
-  schoolRouter.delete("/:id", async (req, res) => {
+  schoolRouter.delete("/:id",token,adminOnly, async (req, res) => {
     try {
       var School = await SchoolSchema.findByIdAndDelete({_id:req.params.id})
       if(School===null)
@@ -60,7 +61,7 @@ schoolRouter.post("/create", async (req, res) => {
     }
   });
 
-  schoolRouter.put("/:id",async(req,res)=>{
+  schoolRouter.put("/:id",token,adminOnly,async(req,res)=>{
       try
       {
           console.log(req.body)
